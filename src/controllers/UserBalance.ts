@@ -1,19 +1,15 @@
 import { Request, Response } from "express";
 import { User } from "./../entities/User.entity";
 
-type TypeUserBalance = { id: number, balance: number }
 import { AppDataSource } from '../config/db';
-
-const getUser = async (userId: number): Promise<User> | null => {
-    const userRepository = AppDataSource.getRepository(User);
-    const user = await userRepository.findOneBy({ id: userId });
-    return user;
-}
+import { UserService } from "../services/UserService";
 
 class UserBalance {
     public async get(req: Request, res: Response) {
+        const userRepository = AppDataSource.getRepository(User);
         try {
-            const user = await getUser(parseInt(req.params.id));
+            const userService = new UserService(userRepository);
+            const user = await userService.getUser(parseInt(req.params.id));
             if(user === null) {
                 return res.status(404).json({ error: 'User not found!' });
             }

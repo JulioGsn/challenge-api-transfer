@@ -2,5 +2,9 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
-  testPathIgnorePatterns: ["dist", "node_modules"]
+  testPathIgnorePatterns: ["dist", "node_modules"],
+  testMatch: [
+    "**/*.spec.ts",
+    "**/*.it.spec.ts"
+  ]
 };
