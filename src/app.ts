@@ -1,23 +1,24 @@
 import express, { Application, Router } from 'express';
 
 export class App {
-    private app: Application;
+    public express: Application;
 
-    constructor() {
-        this.app = express();
+    constructor(routes: Router) {
+        this.express = express();
         this.config();
+        this.routes(routes);
     }
 
-    private config() {
-        this.app.use(express.json());
+    config() {
+        this.express.use(express.json());
     }
 
-    useRouter(routes: Router) {
-        this.app.use(routes);
+    routes(routes: Router) {
+        this.express.use(routes);
     }
 
-    start(port: number): void {
-        this.app.listen(port, () => {
+    listen(port: number): void {
+        this.express.listen(port, () => {
             console.log('Server is running on port ' + port);
         });
     }

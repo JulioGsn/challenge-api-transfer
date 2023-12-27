@@ -9,7 +9,7 @@ export const AppDataSource = new DataSource({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
     migrations: ["src/migrations/*.ts"],
-    entities: ["src/entities/*.ts"],
+    entities: [__dirname + "/../entities/*.{ts, js}"],
     extra: {
         decimalNumbers: true,
     }

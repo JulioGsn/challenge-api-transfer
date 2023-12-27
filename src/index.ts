@@ -2,16 +2,22 @@ import { App } from './app';
 import routes from './routes';
 import { AppDataSource } from './config/db';
 
-AppDataSource
+const dbInit = async () => {
+    await AppDataSource
     .initialize()
-    .then(() => {
-        console.log("Data Source has been initialized!");
-    })
     .catch(err => {
         console.error("Error during Data Source initialization", err);
     });
 
-const app = new App();
+    console.log("Data Source has been initialized!");
+}
 
-app.useRouter(routes);
-app.start(3333);
+const startServer = async () => {
+    await dbInit();
+
+    const app = new App(routes);
+
+    app.listen(3333);
+}
+
+startServer();

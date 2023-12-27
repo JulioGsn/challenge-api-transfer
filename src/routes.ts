@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import { AppDataSource } from './config/db';
 import { User } from "./entities/User.entity";
+import UserBalance from "./controllers/UserBalance";
 
 const router = express.Router();
 
@@ -15,14 +16,7 @@ router.get('/users', (req: Request, res: Response) => {
     return res.status(200).json({ msg: "Api is alive" });
 });
 
-router.get('/users/:id/balance', async (req: Request, res: Response) => {
-    const user = await getUser(parseInt(req.params.id));
-    if(user === null) {
-        return res.status(404).json({ error: 'User not found!' });
-    }
-
-    return res.status(200).json({ id: user.id, balance: user.balance });
-});
+router.get('/users/:id/balance', UserBalance.get);
 
 router.get('/transfers', (req: Request, res: Response) => {
     return res.status(200).json({ msg: "Api is alive" });
